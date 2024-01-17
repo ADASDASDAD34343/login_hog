@@ -1,4 +1,5 @@
 const express = require('express');
+const favicon = require('serve-favicon');
 const app = express();
 const port = 3000;
 const path = require('path'); // path 모듈을 추가
