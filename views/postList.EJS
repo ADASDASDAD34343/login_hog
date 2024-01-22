@@ -1,0 +1,58 @@
+<!-- views/postList.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post List</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Post List</h1>
+
+    <% if (posts && posts.length > 0) { %>
+        <ul>
+            <% posts.forEach(post => { %>
+                <li>
+                    <h2><%= post.title %></h2>
+                    <p><%= post.content %></p>
+                    <% if (post.image) { %>
+                        <img src="/uploads/<%= post.image %>" alt="Post Image">
+                    <% } %>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No posts available.</p>
+    <% } %>
+</body>
+</html>

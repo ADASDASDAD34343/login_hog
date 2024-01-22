@@ -1,0 +1,126 @@
+const express = require('express');
+const app = express();
+const favicon = require('serve-favicon');
+const path = require('path');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+const mysql = require('mysql2/promise');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+const port = 3000;
+
+// MySQL 연결 설정
+const connection = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
+});
+
+// 이메일 전송을 위한 transporter 생성
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD
+    }
+});
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/html', 'index.html'));
+});
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/html', 'login .html'));
+});
+app.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/html', 'signup.html'));
+});
+// 회원가입 요청 처리
+app.post('/signup', async (req, res) => {
+    const { username, email, password, authenticationCode } = req.body;
+
+    try {
+        // 중복 아이디 확인
+        const [rows] = await connection.query('SELECT * FROM users WHERE username = ?', [username]);
+        if (rows.length > 0) {
+            return res.status(400).send('Username is already taken');
+        }
+
+        // TODO: 이메일 인증 코드 확인 로직 추가
+
+        // 비밀번호 해싱
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // 새로운 사용자를 MySQL에 추가
+        await connection.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hashedPassword]);
+
+        res.redirect('/login');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// 로그인 요청 처리
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const [rows] = await connection.query('SELECT * FROM users WHERE username = ?', [username]);
+
+        if (rows.length === 0) {
+            return res.status(401).send('Invalid username or password');
+        }
+
+        const user = rows[0];
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (passwordMatch) {
+            res.send('Login successful!');
+        } else {
+            res.status(401).send('Invalid username or password');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// 이메일 인증 요청 처리
+app.get('/send-verification', async (req, res) => {
+    // TODO: 이메일 인증 로직 추가
+
+    const { email } = req.query;
+
+    const mailOptions = {
+        from: 'seumaetik@gmail.com',
+        to: email,
+        subject: '이메일인증',
+        text: 'Your verification code is: 123456' // TODO: 실제 인증 코드 생성 로직 추가
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('Failed to send verification email');
+        } else {
+            console.log('Email sent: ' + info.response);
+            res.send('Verification email sent successfully');
+        }
+    });
+});
+
+// 기타 라우트 및 설정
+// ...
+
+app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+});

@@ -1,0 +1,67 @@
+/* index.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.screen {
+    background-color: #f0f0f0;
+    text-align: center;
+}
+
+.div {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.text-wrapper-1,
+.text-wrapper-2,
+.text-wrapper-3,
+.text-wrapper-4,
+.text-wrapper-5,
+.text-wrapper-6,
+.text-wrapper-7,
+.text-wrapper-8,
+.text-wrapper-9 {
+    margin-right: 10px;
+    cursor: pointer;
+    text-align: left; /* 좌측 정렬 추가 */
+}
+
+.text-wrapper-10 {
+    margin-left: auto;
+    cursor: pointer;
+    text-align: right; /* 우측 정렬 추가 */
+}
+
+img {
+    cursor: pointer;
+}
+
+.rectangle,
+.rectangle-2 {
+    height: 1px;
+    background-color: #ccc;
+    margin: 10px 0;
+}
+
+.footer {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    text-align: center;
+}
+
+/* 추가된 부분 */
+.text-wrapper-8,
+.text-wrapper-9,
+.text-wrapper-10 {
+    text-align: center;
+}

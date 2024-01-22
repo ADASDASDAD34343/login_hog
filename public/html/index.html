@@ -2,10 +2,80 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>홈</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Your Page Title</title>
+    <!-- Bootstrap CSS CDN 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Font Awesome CDN 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-WOdbtJh9eBqy9e8/U9Ldbot7kUiAoaz2HJZD8r2AD99VVe8Rvbnp4X69R6OvaPL95HLtsJ6YcKz1WgS5eRGAuA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .rounded-box {
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #e0e0e0;
+        }
+
+        .rounded-box img {
+            max-width: 100%;
+            border-radius: 15px;
+        }
+    </style>
 </head>
 <body>
-    <h1>안녕하세요 .</h1>
+
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img src="../../icon/logo.png" alt="로고" style="width: 90px; border-radius: 50%;">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">게시판</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">질문</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">친구목록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">채팅</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">로그인</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">회원가입</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container mt-5 text-center">
+        <h1>최근 게시물</h1>
+
+        <div class="container mt-5 text-center">
+            <div class="rounded-box">
+                <!-- 상자 내용 추가 -->
+                <p>내용을 추가하세요.</p>
+                <small class="text-muted">2024-01-01 12:34 PM</small>
+            </div>
+        </div>
+    <div class="container mt-5">
+        <h1>개인정보처리방침</h1>
+        <!-- 개인정보처리방침 내용 추가 -->
+    </div>
+
+   
+
+    <!-- Bootstrap JS와 Popper.js CDN 추가 -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </body>
 </html>
